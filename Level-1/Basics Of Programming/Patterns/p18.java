@@ -7,31 +7,41 @@ public class p18 {
         Scanner scn = new Scanner(System.in);
         int n = scn.nextInt();
 
-        int nst = 1, nsp = n / 2;
+        int osp = 0, isp = n - 2;
 
         for (int r = 1; r <= n; r++) {
 
-            for (int csp = 1; csp <= nsp; csp++)
+            for (int csp = 1; csp <= osp; csp++)
                 System.out.print("  ");
 
-            for (int cst = 1; cst <= nst; cst++)
+            System.out.print("*" + " ");
+
+            for (int csp = 1; csp <= isp; csp++) {
+                if (r == 1 || r > n / 2 + 1)
+                    System.out.print("*" + " ");
+
+                else
+                    System.out.print("  ");
+            }
+
+            if (r != n / 2 + 1)
                 System.out.print("*" + " ");
 
             System.out.println();
 
             if (r <= n / 2) {
 
-                nsp--;
-                nst += 2;
+                osp++;
+                isp -= 2;
             }
 
             else {
 
-                nsp++;
-                nst -= 2;
+                osp--;
+                isp += 2;
             }
         }
 
         scn.close();
     }
-} 
+}

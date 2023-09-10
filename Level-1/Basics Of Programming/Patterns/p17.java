@@ -11,8 +11,13 @@ public class p17 {
 
         for (int r = 1; r <= n; r++) {
 
-            for (int csp = 1; csp <= nsp; csp++)
-                System.out.print("  ");
+            for (int csp = 1; csp <= nsp; csp++) {
+                if (r == n / 2 + 1)
+                    System.out.print("*" + " ");
+
+                else
+                    System.out.print("  ");
+            }
 
             for (int cst = 1; cst <= nst; cst++)
                 System.out.print("*" + " ");
@@ -21,17 +26,15 @@ public class p17 {
 
             if (r <= n / 2) {
 
-                nsp--;
-                nst += 2;
+                nst++;
             }
 
             else {
 
-                nsp++;
-                nst -= 2;
+                nst--;
             }
         }
 
         scn.close();
     }
-} 
+}
