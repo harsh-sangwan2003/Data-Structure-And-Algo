@@ -11,11 +11,23 @@ public class p15 {
 
         for (int r = 1; r <= n; r++) {
 
+            int cnt = r;
+
+            if (r > n / 2)
+                cnt = n - r + 1;
+
             for (int csp = 1; csp <= nsp; csp++)
                 System.out.print("  ");
 
-            for (int cst = 1; cst <= nst; cst++)
-                System.out.print("*" + " ");
+            for (int cst = 1; cst <= nst; cst++) {
+                System.out.print(cnt + " ");
+
+                if (cst <= nst / 2)
+                    cnt++;
+
+                else
+                    cnt--;
+            }
 
             System.out.println();
 
@@ -34,4 +46,4 @@ public class p15 {
 
         scn.close();
     }
-} 
+}

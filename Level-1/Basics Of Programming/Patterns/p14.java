@@ -7,31 +7,11 @@ public class p14 {
         Scanner scn = new Scanner(System.in);
         int n = scn.nextInt();
 
-        int nst = 1, nsp = n / 2;
+        for (int i = 1; i <= 10; i++) {
 
-        for (int r = 1; r <= n; r++) {
-
-            for (int csp = 1; csp <= nsp; csp++)
-                System.out.print("  ");
-
-            for (int cst = 1; cst <= nst; cst++)
-                System.out.print("*" + " ");
-
-            System.out.println();
-
-            if (r <= n / 2) {
-
-                nsp--;
-                nst += 2;
-            }
-
-            else {
-
-                nsp++;
-                nst -= 2;
-            }
+            System.out.println(n + " * " + i + " = " + n * i);
         }
 
         scn.close();
     }
-} 
+}
