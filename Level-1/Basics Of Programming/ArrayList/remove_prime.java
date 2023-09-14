@@ -39,6 +39,8 @@ public class remove_prime {
 
         for (int val : list)
             System.out.print(val + " ");
+
+        scn.close();
     }
 
 }
