@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class stair_path {
+public class stair_paths {
 
     public static ArrayList<String> getStairPaths(int n) {
 
