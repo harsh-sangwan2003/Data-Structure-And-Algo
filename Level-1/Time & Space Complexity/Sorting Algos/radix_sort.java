@@ -1,17 +1,31 @@
 import java.util.Scanner;
 
-public class count_sort {
+public class radix_sort {
 
-    public static void countSort(int[] arr, int min, int max) {
+    public static void radixSort(int[] arr) {
+
+        int exp = 1;
+        int max = Integer.MIN_VALUE;
+
+        for (int val : arr)
+            max = Math.max(val, max);
+
+        while (exp <= max) {
+
+            countSort(arr, exp);
+            exp *= 10;
+        }
+
+    }
+
+    public static void countSort(int[] arr, int exp) {
         // write your code here
 
-        int range = max - min + 1;
-        int[] farr = new int[range];
+        int[] farr = new int[10];
 
         for (int i = 0; i < arr.length; i++) {
 
-            int idx = arr[i] - min;
-            farr[idx]++;
+            farr[arr[i] / exp % 10]++;
         }
 
         for (int i = 1; i < farr.length; i++)
@@ -21,13 +35,9 @@ public class count_sort {
 
         for (int i = arr.length - 1; i >= 0; i--) {
 
-            int val = arr[i];
-            int pos = farr[val - min];
-            int idx = pos - 1;
-
-            ans[idx] = val;
-
-            farr[val - min]--;
+            int pos = farr[arr[i] / exp % 10] - 1;
+            ans[pos] = arr[i];
+            farr[arr[i] / exp % 10]--;
         }
 
         for (int i = 0; i < arr.length; i++)
@@ -57,7 +67,7 @@ public class count_sort {
             min = Math.min(min, arr[i]);
         }
 
-        countSort(arr, min, max);
+        radixSort(arr);
         print(arr);
 
         scn.close();
