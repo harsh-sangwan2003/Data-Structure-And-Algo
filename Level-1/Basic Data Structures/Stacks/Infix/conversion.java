@@ -33,58 +33,81 @@ public class conversion {
         String exp = br.readLine();
 
         // code
-        Stack<Integer> oprnds = new Stack<>();
-        Stack<Character> optors = new Stack<>();
+        Stack<String> pre = new Stack<>();
+        Stack<String> post = new Stack<>();
+        Stack<Character> ops = new Stack<>();
 
         for (int i = 0; i < exp.length(); i++) {
 
             char ch = exp.charAt(i);
 
             if (ch == '(')
-                optors.push(ch);
+                ops.push(ch);
 
-            else if (Character.isDigit(ch))
-                oprnds.push(ch - '0');
+            else if ((ch >= '0' && ch <= '9') || (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z')) {
+                pre.push(ch + "");
+                post.push(ch + "");
+            }
 
             else if (ch == ')') {
 
-                while (optors.size() != 0 && optors.peek() != '(') {
+                while (ops.size() != 0 && ops.peek() != '(') {
 
-                    char optor = optors.pop();
-                    int val2 = oprnds.pop();
-                    int val1 = oprnds.pop();
+                    char op = ops.pop();
 
-                    int res = operation(val1, val2, optor);
-                    oprnds.push(res);
+                    String postv2 = post.pop();
+                    String postv1 = post.pop();
+                    String postv = postv2 + postv1 + op;
+                    post.push(postv);
+
+                    String prev2 = pre.pop();
+                    String prev1 = pre.pop();
+                    String prev = op + prev1 + prev2;
+                    post.push(prev);
+
                 }
+
+                ops.pop();
             }
 
             else if (ch == '+' || ch == '-' || ch == '*' || ch == '/') {
 
-                while (optors.size() != 0 && optors.peek() != '(' && precedence(ch) >= precedence(optors.peek())) {
+                while (ops.size() != 0 && ops.peek() != '(' && precedence(ch) <= precedence(ops.peek())) {
 
-                    char optor = optors.pop();
-                    int val2 = oprnds.pop();
-                    int val1 = oprnds.pop();
+                    char op = ops.pop();
 
-                    int res = operation(val1, val2, optor);
-                    oprnds.push(res);
+                    String postv2 = post.pop();
+                    String postv1 = post.pop();
+                    String postv = postv2 + postv1 + op;
+                    post.push(postv);
+
+                    String prev2 = pre.pop();
+                    String prev1 = pre.pop();
+                    String prev = op + prev1 + prev2;
+                    post.push(prev);
+
                 }
 
-                optors.push(ch);
+                ops.push(ch);
             }
         }
 
-        while (optors.size() != 0) {
+        while (ops.size() != 0) {
 
-            char optor = optors.pop();
-            int val2 = oprnds.pop();
-            int val1 = oprnds.pop();
+            char op = ops.pop();
 
-            int res = operation(val1, val2, optor);
-            oprnds.push(res);
+            String postv2 = post.pop();
+            String postv1 = post.pop();
+            String postv = postv2 + postv1 + op;
+            post.push(postv);
+
+            String prev2 = pre.pop();
+            String prev1 = pre.pop();
+            String prev = op + prev1 + prev2;
+            post.push(prev);
         }
 
-        System.out.println(oprnds.pop());
+        System.out.println(post.pop());
+        System.out.println(pre.pop());
     }
 }
