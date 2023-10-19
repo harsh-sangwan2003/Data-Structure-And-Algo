@@ -1,6 +1,6 @@
 import java.io.*;
 
-public class kth_ele {
+public class merge_sorted_lists {
 
     public static class Node {
         int data;
@@ -200,75 +200,89 @@ public class kth_ele {
         }
 
         public int kthFromLast(int k) {
-            // write your code here
             Node slow = head;
             Node fast = head;
-
-            for (int i = 0; i < k; i++)
+            for (int i = 0; i < k; i++) {
                 fast = fast.next;
+            }
 
             while (fast != tail) {
-
                 slow = slow.next;
                 fast = fast.next;
             }
 
             return slow.data;
         }
+
+        public int mid() {
+            Node f = head;
+            Node s = head;
+
+            while (f.next != null && f.next.next != null) {
+                f = f.next.next;
+                s = s.next;
+            }
+
+            return s.data;
+        }
+
+        public static LinkedList mergeTwoSortedLists(LinkedList l1, LinkedList l2) {
+            // write your code hered
+            LinkedList res = new LinkedList();
+            Node one = l1.head;
+            Node two = l2.head;
+
+            while (one != null && two != null) {
+
+                if (one.data < two.data) {
+                    res.addLast(one.data);
+                    one = one.next;
+                }
+
+                else {
+                    res.addLast(two.data);
+                    two = two.next;
+                }
+            }
+
+            while (one != null) {
+
+                res.addLast(one.data);
+                one = one.next;
+            }
+
+            while (two != null) {
+
+                res.addLast(two.data);
+                two = two.next;
+            }
+
+            return res;
+        }
     }
 
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        LinkedList list = new LinkedList();
 
-        String str = br.readLine();
-        while (str.equals("quit") == false) {
-            if (str.startsWith("addLast")) {
-                int val = Integer.parseInt(str.split(" ")[1]);
-                list.addLast(val);
-            } else if (str.startsWith("size")) {
-                System.out.println(list.size());
-            } else if (str.startsWith("display")) {
-                list.display();
-            } else if (str.startsWith("removeFirst")) {
-                list.removeFirst();
-            } else if (str.startsWith("getFirst")) {
-                int val = list.getFirst();
-                if (val != -1) {
-                    System.out.println(val);
-                }
-            } else if (str.startsWith("getLast")) {
-                int val = list.getLast();
-                if (val != -1) {
-                    System.out.println(val);
-                }
-            } else if (str.startsWith("getAt")) {
-                int idx = Integer.parseInt(str.split(" ")[1]);
-                int val = list.getAt(idx);
-                if (val != -1) {
-                    System.out.println(val);
-                }
-            } else if (str.startsWith("addFirst")) {
-                int val = Integer.parseInt(str.split(" ")[1]);
-                list.addFirst(val);
-            } else if (str.startsWith("addAt")) {
-                int idx = Integer.parseInt(str.split(" ")[1]);
-                int val = Integer.parseInt(str.split(" ")[2]);
-                list.addAt(idx, val);
-            } else if (str.startsWith("removeLast")) {
-                list.removeLast();
-            } else if (str.startsWith("removeAt")) {
-                int idx = Integer.parseInt(str.split(" ")[1]);
-                list.removeAt(idx);
-            } else if (str.startsWith("reverseDI")) {
-                list.reverseDI();
-            } else if (str.startsWith("reversePI")) {
-                list.reversePI();
-            } else if (str.startsWith("kthFromEnd")) {
-                int idx = Integer.parseInt(str.split(" ")[1]);
-                System.out.println(list.kthFromLast(idx));
-            }
-            str = br.readLine();
+        int n1 = Integer.parseInt(br.readLine());
+        LinkedList l1 = new LinkedList();
+        String[] values1 = br.readLine().split(" ");
+        for (int i = 0; i < n1; i++) {
+            int d = Integer.parseInt(values1[i]);
+            l1.addLast(d);
         }
+
+        int n2 = Integer.parseInt(br.readLine());
+        LinkedList l2 = new LinkedList();
+        String[] values2 = br.readLine().split(" ");
+        for (int i = 0; i < n2; i++) {
+            int d = Integer.parseInt(values2[i]);
+            l2.addLast(d);
+        }
+
+        LinkedList merged = LinkedList.mergeTwoSortedLists(l1, l2);
+        merged.display();
+        l1.display();
+        l2.display();
     }
 }

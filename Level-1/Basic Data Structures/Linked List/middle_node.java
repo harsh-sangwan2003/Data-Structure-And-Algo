@@ -1,6 +1,6 @@
 import java.io.*;
 
-public class kth_ele {
+public class middle_node {
 
     public static class Node {
         int data;
@@ -200,17 +200,29 @@ public class kth_ele {
         }
 
         public int kthFromLast(int k) {
+            Node slow = head;
+            Node fast = head;
+            for (int i = 0; i < k; i++) {
+                fast = fast.next;
+            }
+
+            while (fast != tail) {
+                slow = slow.next;
+                fast = fast.next;
+            }
+
+            return slow.data;
+        }
+
+        public int mid() {
             // write your code here
             Node slow = head;
             Node fast = head;
 
-            for (int i = 0; i < k; i++)
-                fast = fast.next;
-
-            while (fast != tail) {
+            while (fast.next != null && fast.next.next != null) {
 
                 slow = slow.next;
-                fast = fast.next;
+                fast = fast.next.next;
             }
 
             return slow.data;
@@ -267,6 +279,8 @@ public class kth_ele {
             } else if (str.startsWith("kthFromEnd")) {
                 int idx = Integer.parseInt(str.split(" ")[1]);
                 System.out.println(list.kthFromLast(idx));
+            } else if (str.startsWith("mid")) {
+                System.out.println(list.mid());
             }
             str = br.readLine();
         }
