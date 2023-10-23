@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class diameter_of_gt {
+public class itr_pre_post {
 
     private static class Node {
         int data;
@@ -45,30 +45,52 @@ public class diameter_of_gt {
         return root;
     }
 
-    static int dia;
+    public static class Pair {
 
-    public static int calcDia(Node node) {
+        Node node;
+        int state;
 
-        int dch = -1, sdch = -1;
+        Pair(Node node, int state) {
 
-        for (Node child : node.children) {
+            this.node = node;
+            this.state = state;
+        }
+    }
 
-            int ch = calcDia(child);
+    public static void IterativePreandPostOrder(Node node) {
+        // write your code here
+        Stack<Pair> st = new Stack<>();
+        st.push(new Pair(node, -1));
 
-            if (ch > dch) {
-                sdch = dch;
-                dch = ch;
+        String pre = "";
+        String post = "";
+
+        while (st.size() != 0) {
+
+            Pair top = st.peek();
+
+            if (top.state == 0) {
+
+                pre += top.node.data + " ";
+                top.state++;
             }
 
-            else if (ch > sdch)
-                sdch = ch;
+            else if (top.state == top.node.children.size()) {
+
+                post += top.node.data + " ";
+                st.pop();
+            }
+
+            else {
+
+                Pair cp = new Pair(top.node.children.get(top.state), -1);
+                st.push(cp);
+                top.state++;
+            }
         }
 
-        if (dch + sdch + 2 >= dia)
-            dia = dch + sdch + 2;
-
-        dch += 1;
-        return dch;
+        System.out.println(pre);
+        System.out.println(post);
     }
 
     public static void main(String[] args) throws Exception {
@@ -81,11 +103,7 @@ public class diameter_of_gt {
         }
 
         Node root = construct(arr);
-        // write your code here
-        dia = 0;
-
-        calcDia(root);
-        System.out.println(dia);
+        IterativePreandPostOrder(root);
     }
 
 }
