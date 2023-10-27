@@ -77,6 +77,51 @@ public class multisolver {
     public static void multisolver(ArrayList<Edge>[] graph, int src, int dest, boolean[] visited, int criteria, int k,
             String psf, int wsf) {
 
-        
+        if (src == dest) {
+            spath = psf;
+            spathwt = wsf;
+            return;
+        }
+
+        if (wsf > lpathwt) {
+
+            lpathwt = wsf;
+            lpath = psf;
+        }
+
+        if (wsf > criteria && wsf < cpathwt) {
+
+            cpath = psf;
+            cpathwt = wsf;
+        }
+
+        if (wsf < criteria && wsf > fpathwt) {
+
+            fpath = psf;
+            fpathwt = wsf;
+        }
+
+        if (pq.size() < k)
+            pq.add(new Pair(wsf, psf));
+
+        else {
+
+            if (wsf > pq.peek().wsf) {
+
+                pq.remove();
+                pq.add(new Pair(wsf, psf));
+            }
+        }
+
+        visited[src] = true;
+        for (Edge edge : graph[src]) {
+
+            if (!visited[edge.nbr]) {
+
+                multisolver(graph, edge.nbr, dest, visited, criteria, k, psf + edge.nbr, wsf + edge.wt);
+            }
+        }
+
+        visited[src] = false;
     }
 }
