@@ -11,30 +11,36 @@ public class with_cool_down {
         for (int i = 0; i < n; i++)
             arr[i] = scn.nextInt();
 
-        int fee = scn.nextInt();
-
-        int obsp = -arr[0], ossp = 0;
+        int obsp = -arr[0], ossp = 0, ocsp = 0;
 
         for (int i = 1; i < arr.length; i++) {
 
-            int nbsp = 0, nssp = 0;
+            int nbsp = 0, nssp = 0, ncsp = 0;
 
-            if (ossp - arr[i] > obsp)
-                nbsp = ossp - arr[i];
+            if (ocsp - arr[i] > obsp)
+                nbsp = ocsp - arr[i];
 
             else
                 nbsp = obsp;
 
-            if (obsp + arr[i] - fee > ossp)
-                nssp = obsp + arr[i] - fee;
+            if (obsp + arr[i] > ossp)
+                nssp = obsp + arr[i];
 
             else
                 nssp = ossp;
 
+            if (ossp > ocsp)
+                ncsp = ossp;
+
+            else
+                ncsp = ocsp;
+
             obsp = nbsp;
             ossp = nssp;
+            ocsp = ncsp;
         }
 
+        System.out.println(ocsp);
         scn.close();
     }
 
