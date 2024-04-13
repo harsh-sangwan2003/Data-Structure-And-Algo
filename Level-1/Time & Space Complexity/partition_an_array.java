@@ -8,7 +8,7 @@ public class partition_an_array {
 
         while (i < arr.length) {
 
-            if (arr[i] > pivot)
+            if (arr[i] >= pivot)
                 i++;
 
             else {
